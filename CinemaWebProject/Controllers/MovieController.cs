@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CinemaWebProject.Models;
 using CinemaWebProject.ViewModels.Movie;
+using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWebProject.Controllers;
 
-public class MovieController : Controller
+public class MovieController(CinemaDbContext context) : Controller
 {
-    private static List<Movie> movies = new List<Movie>();
+    private readonly CinemaDbContext _context = context;
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         var viewModel = new List<IndexViewModel>();
+        var movies = await _context.Movies.ToListAsync();
 
         foreach (var movie in movies) 
         {
@@ -36,15 +38,13 @@ public class MovieController : Controller
     }
 
     [HttpPost]
-    public IActionResult Create(CreateViewModel movie)
+    public async Task<IActionResult> Create(CreateViewModel movie)
     {
-        var moveiId = movies.Count + 1;
 
         if (ModelState.IsValid) 
         {
             Movie movieToAdd = new Movie 
             {
-                Id = moveiId,
                 Title = movie.Title,
                 Description = movie.Description,
                 Director = movie.Director,
@@ -53,16 +53,17 @@ public class MovieController : Controller
                 ReleaseDate = movie.ReleaseDate
             };
 
-            movies.Add(movieToAdd);
+            await _context.Movies.AddAsync(movieToAdd);
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         return View(movie);
     }
 
-    public IActionResult Details(int id)
+    public async Task<IActionResult> Details(int id)
     {
-        Movie? movie = movies.FirstOrDefault(m => m.Id == id);
+        Movie? movie = await _context.Movies.FindAsync(id);
 
         if (movie != null) 
         {
