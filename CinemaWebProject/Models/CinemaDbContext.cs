@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWebProject.Models;
 
-public class CinemaDbContext : DbContext
+public class CinemaDbContext : IdentityDbContext<IdentityUser>
 {
     public CinemaDbContext(DbContextOptions<CinemaDbContext> options) : base(options)
     {
