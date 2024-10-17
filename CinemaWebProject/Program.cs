@@ -16,7 +16,31 @@ namespace CinemaWebProject
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddDefaultIdentity<IdentityUser>()
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+            {
+                //Password configuration
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequiredUniqueChars = 0;
+                
+                //Sing in requierments 
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+
+                //Lockout Options
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                //User Settings
+                options.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnm1234567890@";
+                options.User.RequireUniqueEmail = true;
+
+            })
                 .AddEntityFrameworkStores<CinemaDbContext>();
 
             builder.Services.AddControllersWithViews();
