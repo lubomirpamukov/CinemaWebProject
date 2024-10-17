@@ -2,7 +2,7 @@
 
 namespace CinemaWebProject.ViewModels.Movie;
 
-public class IndexViewModel
+public class MovieIndexViewModel
 {
     public int Id { get; set; }
     public string Title { get; set; } = null!;

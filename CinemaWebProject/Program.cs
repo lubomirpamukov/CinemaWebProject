@@ -1,4 +1,5 @@
 using CinemaWebProject.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWebProject
@@ -14,6 +15,9 @@ namespace CinemaWebProject
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<CinemaDbContext>();
 
             builder.Services.AddControllersWithViews();
 
@@ -32,7 +36,9 @@ namespace CinemaWebProject
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",

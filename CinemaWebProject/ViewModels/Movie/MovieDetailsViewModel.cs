@@ -2,7 +2,7 @@
 using static CinemaWebProject.Common.Constants.Movie;
 namespace CinemaWebProject.ViewModels.Movie
 {
-    public class DetailsViewModel
+    public class MovieDetailsViewModel
     {
 
         public string Title { get; set; } = null!;

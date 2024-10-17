@@ -20,8 +20,9 @@ public class Movie
     [DataType(DataType.Date)]
     public DateTime ReleaseDate { get; set; }
 
+    [Required]
     [MaxLength(DirectorMaxLength)]
-    public string? Director { get; set; }
+    public string Director { get; set; }
 
     [Required]
     [Range(DurationMinLength,DurationMaxLength)]
@@ -29,5 +30,8 @@ public class Movie
 
     [MaxLength(DurationMaxLength)]
     public string? Description { get; set; }
+
+    public virtual ICollection<CinemaMovie> CinemaMovies { get; set; }
+        = new HashSet<CinemaMovie>();
 
 }
