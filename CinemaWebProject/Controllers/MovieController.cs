@@ -60,27 +60,12 @@ public class MovieController(CinemaDbContext context, IMovieService movieService
     [HttpGet]
     public async Task<IActionResult> AddToProgram(int id) 
     {
-        //Get movie
-        Movie? movie = await _context.Movies.FindAsync(id);
-        // check if movie exist
-        if (movie == null) 
+        var viewModel = await _movieService.AddToProgramGetAsync(id);
+
+        if (viewModel == null) 
         {
             return RedirectToAction("Index");
         }
-        //get all cinemas
-        var cinemas = await _context.Cinemas.ToListAsync();
-
-        AddMovieToCinemaProgramViewModel viewModel = new AddMovieToCinemaProgramViewModel
-        {
-            MovieId = movie.Id,
-            MovieTitle = movie.Title,
-            Cinemas = cinemas.Select(cinema => new CinemaCheckBoxItemViewModel
-            {
-                Id = cinema.Id,
-                Name = cinema.Name,
-                IsSelected = false
-            }).ToList()
-        };
 
         return View(viewModel);
     }
@@ -94,32 +79,13 @@ public class MovieController(CinemaDbContext context, IMovieService movieService
             return View(viewModelData);
         }
 
-        //removing previouse connection with movie cinemas
-        var movieCinemaRelations = await _context.CinemasMovies
-                                         .Where(cm => cm.MovieId == viewModelData.MovieId)
-                                         .ToArrayAsync();
-        
-        _context.RemoveRange(movieCinemaRelations);
-        await _context.SaveChangesAsync();
+        var addMovieToProgram = await _movieService.AddToProgramPostAsync(viewModelData);
 
-        //Adding the movie to the selected cinemas
-        foreach (var cinema in viewModelData.Cinemas) 
+        if (addMovieToProgram)
         {
-            if (cinema.IsSelected) 
-            {
-                //Creating a new mapping table entity
-                var cinemaMovie = new CinemaMovie 
-                {
-                    CinemaId = cinema.Id,
-                    MovieId = viewModelData.MovieId
-                };
-
-                //adding cinemaMovies mapping entitiy to the database
-                _context.CinemasMovies.Add(cinemaMovie);
-            }
+            return RedirectToAction("Index");
         }
-        // saving changes to the database
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Index");
+
+        return NotFound();
     }
 }
