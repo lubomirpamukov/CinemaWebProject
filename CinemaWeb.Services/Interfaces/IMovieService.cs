@@ -7,7 +7,7 @@ public  interface IMovieService
 {
     public Task <IEnumerable<MovieIndexViewModel>> GetAllMoviesAsync();
 
-    public Task<Movie> CreateAsync(MovieCreateViewModel movie);
+    public Task<bool> CreateAsync(MovieCreateViewModel movie);
 
     public Task<MovieDetailsViewModel> GetDetailsAsync(int id);
 
