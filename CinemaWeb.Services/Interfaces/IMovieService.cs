@@ -1,5 +1,5 @@
-﻿using CinemaWebProject.Models;
-using CinemaWebProject.ViewModels.Movie;
+﻿using CinemaWeb.Models;
+using CinemaWeb.ViewModels.Movie;
 
 namespace CinemaWeb.Services.Interfaces;
 

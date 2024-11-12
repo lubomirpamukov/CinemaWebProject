@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CinemaWebProject.Models;
-using CinemaWebProject.ViewModels.Movie;
+using CinemaWeb.Models;
+using CinemaWeb.ViewModels.Movie;
 using Microsoft.EntityFrameworkCore;
-using CinemaWebProject.ViewModels.Cinema;
+using CinemaWeb.ViewModels.Cinema;
 using CinemaWeb.Data.Models;
 using CinemaWeb.Services.Interfaces;
 
-namespace CinemaWebProject.Controllers;
+namespace CinemaWeb.Controllers;
 
 public class MovieController(CinemaDbContext context, IMovieService movieService) : Controller
 {
@@ -53,9 +53,9 @@ public class MovieController(CinemaDbContext context, IMovieService movieService
     }
 
     [HttpGet]
-    public async Task<IActionResult> AddToProgram(int id) 
+    public async Task<IActionResult> AddToProgram(int movieId) 
     {
-        var viewModel = await _movieService.AddToProgramGetAsync(id);
+        var viewModel = await _movieService.AddToProgramGetAsync(movieId);
 
         if (viewModel == null) 
         {

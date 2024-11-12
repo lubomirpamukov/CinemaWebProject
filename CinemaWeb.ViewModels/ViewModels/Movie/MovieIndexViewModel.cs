@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CinemaWebProject.ViewModels.Movie;
+namespace CinemaWeb.ViewModels.Movie;
 
 public class MovieIndexViewModel
 {

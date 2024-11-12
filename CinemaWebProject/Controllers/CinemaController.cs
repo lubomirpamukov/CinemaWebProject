@@ -1,11 +1,11 @@
 ﻿using CinemaWeb.Data.Models;
-using CinemaWebProject.Models;
-using CinemaWebProject.ViewModels.Cinema;
-using CinemaWebProject.ViewModels.Movie;
+using CinemaWeb.Models;
+using CinemaWeb.ViewModels.Cinema;
+using CinemaWeb.ViewModels.Movie;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaWebProject.Controllers;
+namespace CinemaWeb.Controllers;
 
 public class CinemaController(CinemaDbContext context) : Controller
 {

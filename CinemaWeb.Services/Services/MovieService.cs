@@ -1,8 +1,8 @@
 ﻿using CinemaWeb.Data.Models;
 using CinemaWeb.Services.Interfaces;
-using CinemaWebProject.Models;
-using CinemaWebProject.ViewModels.Cinema;
-using CinemaWebProject.ViewModels.Movie;
+using CinemaWeb.Models;
+using CinemaWeb.ViewModels.Cinema;
+using CinemaWeb.ViewModels.Movie;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWeb.Services.Services;

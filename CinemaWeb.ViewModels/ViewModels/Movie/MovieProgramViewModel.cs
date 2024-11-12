@@ -1,4 +1,4 @@
-﻿namespace CinemaWebProject.ViewModels.Movie;
+﻿namespace CinemaWeb.ViewModels.Movie;
 
 public class MovieProgramViewModel
 {

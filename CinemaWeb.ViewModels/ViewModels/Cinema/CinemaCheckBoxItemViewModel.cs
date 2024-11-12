@@ -1,4 +1,4 @@
-﻿namespace CinemaWebProject.ViewModels.Cinema;
+﻿namespace CinemaWeb.ViewModels.Cinema;
 
 public class CinemaCheckBoxItemViewModel
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace CinemaWebProject.Models;
+namespace CinemaWeb.Models;
 
 public class ApplicationUser : IdentityUser
 {

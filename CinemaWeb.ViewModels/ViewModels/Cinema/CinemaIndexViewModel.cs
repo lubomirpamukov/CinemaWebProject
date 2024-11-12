@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static CinemaWebProject.Common.Constants.Cinema;
-namespace CinemaWebProject.ViewModels.Cinema;
+using static CinemaWeb.Common.Constants.Cinema;
+namespace CinemaWeb.ViewModels.Cinema;
 
 public class CinemaIndexViewModel
 {

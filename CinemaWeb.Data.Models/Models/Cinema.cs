@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static CinemaWebProject.Common.Constants.Cinema;
-namespace CinemaWebProject.Models;
+using static CinemaWeb.Common.Constants.Cinema;
+namespace CinemaWeb.Models;
 
 public class Cinema
 {

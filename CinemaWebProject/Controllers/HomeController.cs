@@ -1,8 +1,8 @@
-using CinemaWebProject.Models;
+using CinemaWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace CinemaWebProject.Controllers
+namespace CinemaWeb.Controllers
 {
     public class HomeController : Controller
     {

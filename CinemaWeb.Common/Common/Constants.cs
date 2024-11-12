@@ -1,4 +1,4 @@
-﻿namespace CinemaWebProject.Common;
+﻿namespace CinemaWeb.Common;
 
 public class Constants
 {

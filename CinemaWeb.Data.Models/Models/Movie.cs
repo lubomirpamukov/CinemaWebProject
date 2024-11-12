@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static CinemaWebProject.Common.Constants.Movie;
+using static CinemaWeb.Common.Constants.Movie;
 
-namespace CinemaWebProject.Models;
+namespace CinemaWeb.Models;
 
 public class Movie
 {

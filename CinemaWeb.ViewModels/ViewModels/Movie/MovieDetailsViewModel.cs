@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static CinemaWebProject.Common.Constants.Movie;
-namespace CinemaWebProject.ViewModels.Movie
+using static CinemaWeb.Common.Constants.Movie;
+namespace CinemaWeb.ViewModels.Movie
 {
     public class MovieDetailsViewModel
     {

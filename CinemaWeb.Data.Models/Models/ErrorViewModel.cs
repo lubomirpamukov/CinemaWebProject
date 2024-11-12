@@ -1,4 +1,4 @@
-namespace CinemaWebProject.Models
+namespace CinemaWeb.Models
 {
     public class ErrorViewModel
     {

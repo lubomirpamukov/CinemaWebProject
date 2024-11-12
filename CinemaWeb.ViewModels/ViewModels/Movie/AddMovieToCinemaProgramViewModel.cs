@@ -1,6 +1,6 @@
-﻿using CinemaWebProject.ViewModels.Cinema;
+﻿using CinemaWeb.ViewModels.Cinema;
 
-namespace CinemaWebProject.ViewModels.Movie
+namespace CinemaWeb.ViewModels.Movie
 {
     public class AddMovieToCinemaProgramViewModel
     {

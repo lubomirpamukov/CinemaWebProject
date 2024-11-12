@@ -1,11 +1,11 @@
 using CinemaWeb.Data.Models;
 using CinemaWeb.Services.Interfaces;
 using CinemaWeb.Services.Services;
-using CinemaWebProject.Models;
+using CinemaWeb.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaWebProject
+namespace CinemaWeb
 {
     public class Program
     {
