@@ -29,24 +29,19 @@ public class MovieController(CinemaDbContext context, IMovieService movieService
     public async Task<IActionResult> Create(MovieCreateViewModel movie)
     {
 
-        if (ModelState.IsValid) 
+        if (!ModelState.IsValid) 
         {
-            Movie movieToAdd = new Movie 
-            {
-                Title = movie.Title,
-                Description = movie.Description,
-                Director = movie.Director,
-                Duration = movie.Duration,
-                Genre = movie.Genre,
-                ReleaseDate = movie.ReleaseDate
-            };
+            return View(movie);
+        }
 
-            await _context.Movies.AddAsync(movieToAdd);
-            await _context.SaveChangesAsync();
+        var movieToAdd = await _movieService.CreateAsync(movie);
+
+        if (movieToAdd) 
+        {
             return RedirectToAction("Index");
         }
 
-        return View(movie);
+        return NotFound();
     }
 
     public async Task<IActionResult> Details(int id)
