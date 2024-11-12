@@ -26,21 +26,20 @@ public class CinemaController(CinemaDbContext context, ICinemaService cinemaServ
     [HttpPost]
     public async Task<IActionResult> Create(CinemaCreateViewModel viewModel) 
     {
-        if (ModelState.IsValid) 
+        if (!ModelState.IsValid)
         {
-            var modelToAdd = new Cinema
-            {
-                Id= viewModel.Id,
-                Name= viewModel.Name,
-                Location = viewModel.Location
-            };
+            return View(viewModel);
 
-            await _context.Cinemas.AddAsync(modelToAdd);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
         }
 
-        return View(viewModel);
+        var isCinemaCreated = await _cinemaService.CreateAsync(viewModel);
+
+        if (isCinemaCreated) 
+        {
+           return RedirectToAction("Index");
+        }
+
+        return NotFound();
     }
 
     public async Task<IActionResult> ViewMovieProgram(int id) 
