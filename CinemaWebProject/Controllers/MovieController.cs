@@ -4,33 +4,19 @@ using CinemaWebProject.ViewModels.Movie;
 using Microsoft.EntityFrameworkCore;
 using CinemaWebProject.ViewModels.Cinema;
 using CinemaWeb.Data.Models;
+using CinemaWeb.Services.Interfaces;
 
 namespace CinemaWebProject.Controllers;
 
-public class MovieController(CinemaDbContext context) : Controller
+public class MovieController(CinemaDbContext context, IMovieService movieService) : Controller
 {
     private readonly CinemaDbContext _context = context;
+    private readonly IMovieService _movieService = movieService;
 
     public async Task<IActionResult> Index()
     {
-        var viewModel = new List<MovieIndexViewModel>();
-        var movies = await _context.Movies.ToListAsync();
-
-        foreach (var movie in movies) 
-        {
-            var movieView = new MovieIndexViewModel
-            {
-                Id = movie.Id,
-                Title = movie.Title,
-                Duration = movie.Duration,
-                Genre = movie.Genre,
-                ReleaseDate = movie.ReleaseDate,
-            };
-
-            viewModel.Add(movieView);
-        }
-       
-        return View(viewModel);
+        var getMovies = await _movieService.GetAllMoviesAsync();
+        return View(getMovies);
     }
 
     [HttpGet]
@@ -72,7 +58,7 @@ public class MovieController(CinemaDbContext context) : Controller
             MovieDetailsViewModel viewModel = new MovieDetailsViewModel 
             {
                 Title = movie.Title,
-                Genre = movie.Genre,
+                Genre = movie.Genre!,
                 ReleaseDate = movie.ReleaseDate,
                 Director  = movie.Director,
                 Duration = movie.Duration,
@@ -85,10 +71,10 @@ public class MovieController(CinemaDbContext context) : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> AddToProgram(int movieid) 
+    public async Task<IActionResult> AddToProgram(int id) 
     {
         //Get movie
-        Movie? movie = await _context.Movies.FindAsync(movieid);
+        Movie? movie = await _context.Movies.FindAsync(id);
         // check if movie exist
         if (movie == null) 
         {
