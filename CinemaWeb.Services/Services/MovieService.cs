@@ -41,8 +41,20 @@ public class MovieService(CinemaDbContext dbContext) : IMovieService
         return viewModel;
     }
 
-    public Task<MovieDetailsViewModel> GetDetailsAsync(int id)
+    public async Task<MovieDetailsViewModel> GetDetailsAsync(int id)
     {
-        throw new NotImplementedException();
+        Movie? movie = await _context.Movies.FindAsync(id);
+        
+        MovieDetailsViewModel viewModel = new MovieDetailsViewModel
+        {
+            Title = movie.Title,
+            Genre = movie.Genre!,
+            ReleaseDate = movie.ReleaseDate,
+            Director = movie.Director,
+            Duration = movie.Duration,
+            Description = movie.Description
+        };
+
+        return viewModel;
     }
 }

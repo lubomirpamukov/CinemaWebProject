@@ -51,23 +51,10 @@ public class MovieController(CinemaDbContext context, IMovieService movieService
 
     public async Task<IActionResult> Details(int id)
     {
-        Movie? movie = await _context.Movies.FindAsync(id);
+        return (await _movieService.GetDetailsAsync(id)) is MovieDetailsViewModel movieDetails
+                ? View(movieDetails)
+                : NotFound();
 
-        if (movie != null) 
-        {
-            MovieDetailsViewModel viewModel = new MovieDetailsViewModel 
-            {
-                Title = movie.Title,
-                Genre = movie.Genre!,
-                ReleaseDate = movie.ReleaseDate,
-                Director  = movie.Director,
-                Duration = movie.Duration,
-                Description = movie.Description
-            };
-            return View(viewModel);
-        }
-
-            return NotFound();
     }
 
     [HttpGet]
