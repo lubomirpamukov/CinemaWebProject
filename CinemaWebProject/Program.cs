@@ -16,7 +16,7 @@ namespace CinemaWebProject
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
             {
                 //Password configuration
                 options.Password.RequireDigit = false;

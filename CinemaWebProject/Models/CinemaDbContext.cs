@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWebProject.Models;
 
-public class CinemaDbContext : IdentityDbContext<IdentityUser>
+public class CinemaDbContext : IdentityDbContext<ApplicationUser>
 {
     public CinemaDbContext(DbContextOptions<CinemaDbContext> options) : base(options)
     {
