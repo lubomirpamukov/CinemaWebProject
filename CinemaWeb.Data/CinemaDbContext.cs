@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CinemaWebProject.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaWebProject.Models;
+namespace CinemaWeb.Data.Models;
 
 public class CinemaDbContext : IdentityDbContext<ApplicationUser>
 {

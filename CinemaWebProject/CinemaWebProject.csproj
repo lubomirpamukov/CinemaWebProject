@@ -18,4 +18,13 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CinemaWeb.Common\CinemaWeb.Common.csproj" />
+    <ProjectReference Include="..\CinemaWeb.Data.Models\CinemaWeb.Data.Models.csproj" />
+    <ProjectReference Include="..\CinemaWeb.Data\CinemaWeb.Data.csproj" />
+    <ProjectReference Include="..\CinemaWeb.Infrastructure\CinemaWeb.Infrastructure.csproj" />
+    <ProjectReference Include="..\CinemaWeb.Services\CinemaWeb.Services.csproj" />
+    <ProjectReference Include="..\CinemaWeb.ViewModels\CinemaWeb.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>

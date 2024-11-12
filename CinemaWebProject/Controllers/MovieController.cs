@@ -3,6 +3,7 @@ using CinemaWebProject.Models;
 using CinemaWebProject.ViewModels.Movie;
 using Microsoft.EntityFrameworkCore;
 using CinemaWebProject.ViewModels.Cinema;
+using CinemaWeb.Data.Models;
 
 namespace CinemaWebProject.Controllers;
 

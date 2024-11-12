@@ -1,3 +1,4 @@
+using CinemaWeb.Data.Models;
 using CinemaWebProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

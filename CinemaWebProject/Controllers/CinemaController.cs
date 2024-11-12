@@ -1,4 +1,5 @@
-﻿using CinemaWebProject.Models;
+﻿using CinemaWeb.Data.Models;
+using CinemaWebProject.Models;
 using CinemaWebProject.ViewModels.Cinema;
 using CinemaWebProject.ViewModels.Movie;
 using Microsoft.AspNetCore.Mvc;
