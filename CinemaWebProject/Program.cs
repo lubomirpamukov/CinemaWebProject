@@ -50,6 +50,7 @@ namespace CinemaWebProject
                 .AddEntityFrameworkStores<CinemaDbContext>();
 
             builder.Services.AddControllersWithViews();
+                
 
             var app = builder.Build();
 
