@@ -69,9 +69,28 @@ public class MovieService(CinemaDbContext dbContext) : IMovieService
         return true;
     }
 
-    public Task<Movie> CreateAsync(MovieCreateViewModel movie)
+    public async Task<bool> CreateAsync(MovieCreateViewModel movie)
     {
-        throw new NotImplementedException();
+
+        Movie movieToAdd = new Movie
+        {
+            Title = movie.Title,
+            Description = movie.Description,
+            Director = movie.Director,
+            Duration = movie.Duration,
+            Genre = movie.Genre,
+            ReleaseDate = movie.ReleaseDate
+        };
+
+        if (movieToAdd == null) 
+        {
+            return false;
+        }
+
+        await _context.Movies.AddAsync(movieToAdd);
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
     public async Task<IEnumerable<MovieIndexViewModel>> GetAllMoviesAsync()
