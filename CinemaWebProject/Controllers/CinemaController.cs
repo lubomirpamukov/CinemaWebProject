@@ -1,5 +1,6 @@
 ﻿using CinemaWeb.Data.Models;
 using CinemaWeb.Models;
+using CinemaWeb.Services.Interfaces;
 using CinemaWeb.ViewModels.Cinema;
 using CinemaWeb.ViewModels.Movie;
 using Microsoft.AspNetCore.Mvc;
@@ -7,20 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWeb.Controllers;
 
-public class CinemaController(CinemaDbContext context) : Controller
+public class CinemaController(CinemaDbContext context, ICinemaService cinemaService) : Controller
 {
     private readonly CinemaDbContext _context = context;
+    private readonly ICinemaService _cinemaService = cinemaService;
 
     public async Task<IActionResult> Index()
     {
-        var viewModel = await _context.Cinemas.Select(c => new CinemaIndexViewModel 
-        {
-            Id = c.Id,
-            Name = c.Name,
-            Location = c.Location
-        }).ToListAsync();
-
-        return View(viewModel);
+        return View(await _cinemaService.GetAllAsync());
     }
 
     public IActionResult Create() 
