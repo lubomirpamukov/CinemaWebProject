@@ -1,4 +1,6 @@
 using CinemaWeb.Data.Models;
+using CinemaWeb.Services.Interfaces;
+using CinemaWeb.Services.Services;
 using CinemaWebProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,9 @@ namespace CinemaWebProject
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            //Register Business logic Services
+            builder.Services.AddScoped<IMovieService, MovieService>();
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
             {
