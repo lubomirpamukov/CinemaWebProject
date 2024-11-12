@@ -11,7 +11,7 @@ public  interface IMovieService
 
     public Task<MovieDetailsViewModel> GetDetailsAsync(int id);
 
-    public Task <bool> AddToProgramAsync(int id);
+    public Task <AddMovieToCinemaProgramViewModel> AddToProgramGetAsync(int id);
 
-
+    public Task<bool> AddToProgramPostAsync(AddMovieToCinemaProgramViewModel viewModel);
 }
