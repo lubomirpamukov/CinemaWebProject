@@ -21,6 +21,7 @@ namespace CinemaWeb
 
             //Register Business logic Services
             builder.Services.AddScoped<IMovieService, MovieService>();
+            builder.Services.AddScoped<ICinemaService, CinemaService>();
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
             {
