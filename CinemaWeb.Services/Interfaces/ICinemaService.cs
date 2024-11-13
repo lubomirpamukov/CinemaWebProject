@@ -7,5 +7,7 @@ namespace CinemaWeb.Services.Interfaces
         public Task<IEnumerable<CinemaIndexViewModel>> GetAllAsync();
 
         public Task<bool> CreateAsync(CinemaCreateViewModel viewModel);
+
+        public Task<CinemaViewMovieProgramViewModel> ViewMovieProgramAsync(int id)
     }
 }
