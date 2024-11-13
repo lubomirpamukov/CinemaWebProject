@@ -1,8 +1,9 @@
-﻿using CinemaWeb.Models;
+﻿using CinemaWeb.Data.Models.Models;
+using CinemaWeb.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaWeb.Data.Models;
+namespace CinemaWeb.Data;
 
 public class CinemaDbContext : IdentityDbContext<ApplicationUser>
 {
@@ -15,6 +16,8 @@ public class CinemaDbContext : IdentityDbContext<ApplicationUser>
     public virtual DbSet<Cinema> Cinemas { get; set; }
     public virtual DbSet<CinemaMovie> CinemasMovies { get; set; }
     public virtual DbSet<UserMovie> UsersMovies { get; set; }
+    public virtual DbSet<Ticket> Tickets { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -55,5 +58,23 @@ public class CinemaDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(x => x.MovieId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        //Configure relation between Ticket and Movie
+        modelBuilder.Entity<Ticket>()
+            .HasOne(ticket => ticket.Movie)
+            .WithMany(movie => movie.Tickets)
+            .HasForeignKey(ticket => ticket.MovieId);
+
+        //Configure relation between Ticket and Cinema
+        modelBuilder.Entity<Ticket>()
+            .HasOne(ticket => ticket.Cinema)
+            .WithMany(cinema => cinema.Tickets)
+            .HasForeignKey(ticket => ticket.CinemaId);
+
+        //Configure relation between Ticket and User
+        modelBuilder.Entity<Ticket>()
+            .HasOne(ticket => ticket.User)
+            .WithMany(user => user.Tickets)
+            .HasForeignKey(ticket => ticket.UserId);
     }
 }
