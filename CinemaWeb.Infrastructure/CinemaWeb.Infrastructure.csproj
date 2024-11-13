@@ -11,4 +11,9 @@
 	  <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CinemaWeb.Data.Models\CinemaWeb.Data.Models.csproj" />
+    <ProjectReference Include="..\CinemaWeb.Data\CinemaWeb.Data.csproj" />
+  </ItemGroup>
+
 </Project>
