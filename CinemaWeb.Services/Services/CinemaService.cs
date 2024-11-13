@@ -1,6 +1,5 @@
-﻿
-
-using CinemaWeb.Data;
+﻿using CinemaWeb.Data;
+using CinemaWeb.Infrastructure.Repository.Interfaces;
 using CinemaWeb.Models;
 using CinemaWeb.Services.Interfaces;
 using CinemaWeb.ViewModels.Cinema;
@@ -9,8 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWeb.Services.Services;
 
-public class CinemaService(CinemaDbContext context) : ICinemaService
+public class CinemaService(IRepository<Cinema> cinemaRepository, CinemaDbContext context) : ICinemaService
 {
+    private readonly IRepository<Cinema> _cinema = cinemaRepository;
     private readonly CinemaDbContext _context = context;
 
     public async Task<bool> CreateAsync(CinemaCreateViewModel viewModel)
@@ -35,12 +35,14 @@ public class CinemaService(CinemaDbContext context) : ICinemaService
 
     public async Task<IEnumerable<CinemaIndexViewModel>> GetAllAsync()
     {
-        var viewModel = await _context.Cinemas.Select(c => new CinemaIndexViewModel
+        var cinemas = await _cinema.GetAllAsync();
+        
+        var viewModel = cinemas.Select(c => new CinemaIndexViewModel
         {
             Id = c.Id,
             Name = c.Name,
             Location = c.Location
-        }).ToListAsync();
+        }).ToList();
 
         return viewModel;
     }
