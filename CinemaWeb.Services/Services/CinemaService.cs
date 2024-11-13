@@ -1,6 +1,6 @@
 ﻿
 
-using CinemaWeb.Data.Models;
+using CinemaWeb.Data;
 using CinemaWeb.Models;
 using CinemaWeb.Services.Interfaces;
 using CinemaWeb.ViewModels.Cinema;

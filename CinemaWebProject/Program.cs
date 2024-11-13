@@ -1,4 +1,4 @@
-using CinemaWeb.Data.Models;
+using CinemaWeb.Data;
 using CinemaWeb.Services.Interfaces;
 using CinemaWeb.Services.Services;
 using CinemaWeb.Models;

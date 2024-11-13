@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CinemaWeb.Data.Models.Models;
+using System.ComponentModel.DataAnnotations;
 using static CinemaWeb.Common.Constants.Movie;
 
 namespace CinemaWeb.Models;
@@ -31,6 +32,7 @@ public class Movie
     [MaxLength(DurationMaxLength)]
     public string? Description { get; set; }
 
+    public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     public virtual ICollection<CinemaMovie> CinemaMovies { get; set; }
         = new HashSet<CinemaMovie>();
 

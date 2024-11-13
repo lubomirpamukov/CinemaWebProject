@@ -8,9 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWeb.Controllers;
 
-public class CinemaController(CinemaDbContext context, ICinemaService cinemaService) : Controller
+public class CinemaController(ICinemaService cinemaService) : Controller
 {
-    private readonly CinemaDbContext _context = context;
     private readonly ICinemaService _cinemaService = cinemaService;
 
     public async Task<IActionResult> Index()

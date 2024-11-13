@@ -8,9 +8,8 @@ using CinemaWeb.Services.Interfaces;
 
 namespace CinemaWeb.Controllers;
 
-public class MovieController(CinemaDbContext context, IMovieService movieService) : Controller
+public class MovieController(IMovieService movieService) : Controller
 {
-    private readonly CinemaDbContext _context = context;
     private readonly IMovieService _movieService = movieService;
 
     public async Task<IActionResult> Index()

@@ -8,6 +8,6 @@ namespace CinemaWeb.Services.Interfaces
 
         public Task<bool> CreateAsync(CinemaCreateViewModel viewModel);
 
-        public Task<CinemaViewMovieProgramViewModel> ViewMovieProgramAsync(int id)
+        public Task<CinemaViewMovieProgramViewModel> ViewMovieProgramAsync(int id);
     }
 }
