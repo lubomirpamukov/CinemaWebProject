@@ -4,6 +4,10 @@ using CinemaWeb.Services.Services;
 using CinemaWeb.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using CinemaWeb.Infrastructure.Repository.Interfaces;
+using NuGet.Protocol.Core.Types;
+using CinemaWeb.Infrastructure;
 
 namespace CinemaWeb
 {
@@ -22,6 +26,9 @@ namespace CinemaWeb
             //Register Business logic Services
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddScoped<ICinemaService, CinemaService>();
+
+            //Register repositories
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
             {
