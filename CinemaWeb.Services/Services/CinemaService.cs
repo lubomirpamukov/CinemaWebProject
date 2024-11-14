@@ -26,10 +26,7 @@ public class CinemaService(IRepository<Cinema> cinemaRepository) : ICinemaServic
             return false;
         }
 
-        await _context.Cinemas.AddAsync(modelToAdd);
-        await _context.SaveChangesAsync();
-
-        return true;
+        return await _cinema.AddAsync(modelToAdd);
     }
 
     public async Task<IEnumerable<CinemaIndexViewModel>> GetAllAsync()

@@ -4,19 +4,28 @@ using CinemaWeb.Models;
 using CinemaWeb.ViewModels.Cinema;
 using CinemaWeb.ViewModels.Movie;
 using Microsoft.EntityFrameworkCore;
+using CinemaWeb.Infrastructure.Repository.Interfaces;
 
 namespace CinemaWeb.Services.Services;
 
-public class MovieService(CinemaDbContext dbContext) : IMovieService
+public class MovieService
+    (
+        CinemaDbContext dbContext,
+        IRepository<Movie> movieRepository,
+        IRepository<Cinema> cinemaRepository
+
+    ):IMovieService
 {
     private readonly CinemaDbContext _context = dbContext;
+    private readonly IRepository<Movie> _movieRepository = movieRepository;
+    private readonly IRepository<Cinema> _cinemaRepository = cinemaRepository;
     public async Task<AddMovieToCinemaProgramViewModel> AddToProgramGetAsync(int id)
     {
         //Get movie
-        Movie? movie = await _context.Movies.FindAsync(id);
+        Movie? movie = await _movieRepository.FindByIdAsync(id);
         
         //get all cinemas
-        var cinemas = await _context.Cinemas.ToListAsync();
+        var cinemas = await _cinemaRepository.GetAllAsync();
 
         AddMovieToCinemaProgramViewModel viewModel = new AddMovieToCinemaProgramViewModel
         {
