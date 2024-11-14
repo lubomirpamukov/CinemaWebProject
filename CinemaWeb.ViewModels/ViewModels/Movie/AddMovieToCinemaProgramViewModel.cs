@@ -6,7 +6,7 @@ namespace CinemaWeb.ViewModels.Movie
     {
         public int MovieId { get; set; }
 
-        public string MovieTitle { get; set; }
+        public string MovieTitle { get; set; } = null!;
 
         public List<CinemaCheckBoxItemViewModel> Cinemas { get; set; }
             = new List<CinemaCheckBoxItemViewModel>();

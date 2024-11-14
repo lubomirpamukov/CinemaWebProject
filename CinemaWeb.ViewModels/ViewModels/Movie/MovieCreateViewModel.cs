@@ -16,7 +16,7 @@ public class MovieCreateViewModel
     [Required(ErrorMessage = GenreError)]
     [MaxLength(GenreMaxLength)]
     [MinLength(GenreMinLength)]
-    public string Genre { get; set; }
+    public string Genre { get; set; } = null!;
 
     [Required(ErrorMessage = ReleaseDateError)]
     [DataType(DataType.Date)]
@@ -24,8 +24,8 @@ public class MovieCreateViewModel
 
     [Required(ErrorMessage = DirectorError)]
     [MaxLength(DirectorMaxLength, ErrorMessage = DirectorNameLengthError)]
-    [MinLength(DirectorMinLength,ErrorMessage = DirectorNameLengthError)]
-    public string Director { get; set; }
+    [MinLength(DirectorMinLength, ErrorMessage = DirectorNameLengthError)]
+    public string Director { get; set; } = null!;
 
     [Required(ErrorMessage = DurationError)]
     [Range(DurationMinLength, DurationMaxLength,ErrorMessage = DurationRangeError)]
