@@ -8,11 +8,11 @@ namespace CinemaWeb.Infrastructure.Repository.Interfaces;
 
 public interface IRepository<T> where T : class
 {
-    public Task<IEnumerable<T>> GetAllAsync();
+    public Task<IEnumerable<T>?> GetAllAsync();
 
-    public Task<IQueryable<T>> GetAllAttachedAsync();
+    public IQueryable<T> GetAllAttachedAsync();
 
-    public Task<T> FindByIdAsync(object id);
+    public Task<T?> FindByIdAsync(object id);
 
     public Task<bool> AddAsync(T entity);
 
@@ -30,7 +30,7 @@ public interface IRepository<T> where T : class
 
     public Task<(IEnumerable<T> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize);
 
-    public Task<bool> ExistsAsync(Func<T, bool> predicate);
+    public Task<bool> AnyAsync(Func<T, bool> predicate);
 
     public Task<int> CountAsync();
 

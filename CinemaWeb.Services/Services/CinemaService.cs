@@ -27,29 +27,32 @@ public class CinemaService(IRepository<Cinema> cinemaRepository, CinemaDbContext
             return false;
         }
 
-        await _context.Cinemas.AddAsync(modelToAdd);
-        await _context.SaveChangesAsync();
-
-        return true;
+        return await _cinema.AddAsync(modelToAdd);
     }
 
     public async Task<IEnumerable<CinemaIndexViewModel>> GetAllAsync()
     {
         var cinemas = await _cinema.GetAllAsync();
         
-        var viewModel = cinemas.Select(c => new CinemaIndexViewModel
+        var viewModel = cinemas?.Select(c => new CinemaIndexViewModel
         {
             Id = c.Id,
             Name = c.Name,
             Location = c.Location
         }).ToList();
 
+        if (viewModel == null) 
+        {
+            throw new ArgumentNullException(nameof(viewModel));
+        }
+
         return viewModel;
     }
 
     public async Task<CinemaViewMovieProgramViewModel> ViewMovieProgramAsync(int id) 
     {
-        CinemaViewMovieProgramViewModel? cinemaViewMoviesViewModel = await _context.Cinemas
+        CinemaViewMovieProgramViewModel? cinemaViewMoviesViewModel = await _cinema
+            .GetAllAttachedAsync()
             .Where(cinema => cinema.Id == id) // filter only the needed movie
             .Include(cinema => cinema.CinemaMovies) // include the mapping table in the cinema model
             .ThenInclude(cinemaMovie => cinemaMovie.Movie) // here were in the mapping table and include each movie
@@ -65,7 +68,10 @@ public class CinemaService(IRepository<Cinema> cinemaRepository, CinemaDbContext
                 }).ToList()
             }).FirstOrDefaultAsync();
 
-
+        if (cinemaViewMoviesViewModel == null) 
+        {
+            throw new ArgumentNullException(nameof(cinemaViewMoviesViewModel));
+        }
 
         return cinemaViewMoviesViewModel;
     }
