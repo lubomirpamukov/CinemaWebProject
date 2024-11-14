@@ -25,9 +25,9 @@ public class Repository<T> : IRepository<T> where T : class
         return await _dbSet.ToListAsync();
     }
 
-    public Task<IQueryable<T>> GetAllAttachedAsync()
+    public  IQueryable<T> GetAllAttachedAsync()
     {
-        throw new ArgumentException();
+        return _dbSet.AsQueryable();
     }
 
     public Task<T> FindByIdAsync(object id)

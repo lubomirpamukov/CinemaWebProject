@@ -10,7 +10,7 @@ public interface IRepository<T> where T : class
 {
     public Task<IEnumerable<T>> GetAllAsync();
 
-    public Task<IQueryable<T>> GetAllAttachedAsync();
+    public IQueryable<T> GetAllAttachedAsync();
 
     public Task<T> FindByIdAsync(object id);
 
