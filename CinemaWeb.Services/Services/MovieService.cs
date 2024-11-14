@@ -12,20 +12,22 @@ public class MovieService
     (
         CinemaDbContext dbContext,
         IRepository<Movie> movieRepository,
-        IRepository<Cinema> cinemaRepository
+        IRepository<Cinema> cinemaRepository,
+        IRepository<CinemaMovie> cinemaMovieRepository
 
     ):IMovieService
 {
     private readonly CinemaDbContext _context = dbContext;
-    private readonly IRepository<Movie> _movieRepository = movieRepository;
-    private readonly IRepository<Cinema> _cinemaRepository = cinemaRepository;
+    private readonly IRepository<Movie> _movies = movieRepository;
+    private readonly IRepository<Cinema> _cinema = cinemaRepository;
+    private readonly IRepository<CinemaMovie> _cinemaMovie = cinemaMovieRepository;
     public async Task<AddMovieToCinemaProgramViewModel> AddToProgramGetAsync(int id)
     {
         //Get movie
-        Movie? movie = await _movieRepository.FindByIdAsync(id);
+        Movie? movie = await _movies.FindByIdAsync(id);
         
         //get all cinemas
-        var cinemas = await _cinemaRepository.GetAllAsync();
+        var cinemas = await _cinema.GetAllAsync();
 
         AddMovieToCinemaProgramViewModel viewModel = new AddMovieToCinemaProgramViewModel
         {
@@ -49,13 +51,14 @@ public class MovieService
             return false;
         }
         //removing previous connection with movie cinemas
-        var movieCinemaRelations = await _context.CinemasMovies
+        var movieCinemaRelations = await _cinemaMovie
+                                         .GetAllAttachedAsync()
                                          .Where(cm => cm.MovieId == viewModelData.MovieId)
                                          .ToArrayAsync();
 
-        _context.RemoveRange(movieCinemaRelations);
-        await _context.SaveChangesAsync();
+        await _cinemaMovie.DeleteRangeAsync(movieCinemaRelations);
 
+        var cinemaMovieToAdd = new List<CinemaMovie>();
         //Adding the movie to the selected cinemas
         foreach (var cinema in viewModelData.Cinemas)
         {
@@ -69,11 +72,11 @@ public class MovieService
                 };
 
                 //adding cinemaMovies mapping entity to the database
-                _context.CinemasMovies.Add(cinemaMovie);
+                cinemaMovieToAdd.Add(cinemaMovie);
             }
         }
         // saving changes to the database
-        await _context.SaveChangesAsync();
+        await _cinemaMovie.AddRangeAsync(cinemaMovieToAdd);
 
         return true;
     }
@@ -96,16 +99,14 @@ public class MovieService
             return false;
         }
 
-        await _context.Movies.AddAsync(movieToAdd);
-        await _context.SaveChangesAsync();
-
+        await _movies.AddAsync(movieToAdd);
         return true;
     }
 
     public async Task<IEnumerable<MovieIndexViewModel>> GetAllMoviesAsync()
     {
         var viewModel = new List<MovieIndexViewModel>();
-        var movies = await _context.Movies.ToListAsync();
+        var movies = await _movies.GetAllAsync();
 
         foreach (var movie in movies)
         {
@@ -126,7 +127,7 @@ public class MovieService
 
     public async Task<MovieDetailsViewModel> GetDetailsAsync(int id)
     {
-        Movie? movie = await _context.Movies.FindAsync(id);
+        Movie? movie = await _movies.FindByIdAsync(id);
 
         MovieDetailsViewModel viewModel = new MovieDetailsViewModel
         {
