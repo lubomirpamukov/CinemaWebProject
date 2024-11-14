@@ -12,16 +12,16 @@ public class Ticket
 
     [Required]
     [ForeignKey(nameof(CinemaId))]
-    public virtual Cinema Cinema { get; set; }
+    public virtual Cinema Cinema { get; set; } = null!;
     public int MovieId { get; set; }
-   
+
     [Required]
     [ForeignKey(nameof(MovieId))]
-    public virtual Movie Movie { get; set; }
-    public string UserId { get; set; }
-    
+    public virtual Movie Movie { get; set; } = null!;
+    public string UserId { get; set; } = null!;
+
     [Required]
     [ForeignKey(nameof(UserId))]
-    public virtual ApplicationUser User { get; set; }
+    public virtual ApplicationUser User { get; set; } = null!;
 
 }
