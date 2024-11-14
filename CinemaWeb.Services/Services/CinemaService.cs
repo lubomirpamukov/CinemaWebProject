@@ -8,10 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWeb.Services.Services;
 
-public class CinemaService(IRepository<Cinema> cinemaRepository, CinemaDbContext context) : ICinemaService
+public class CinemaService(IRepository<Cinema> cinemaRepository) : ICinemaService
 {
     private readonly IRepository<Cinema> _cinema = cinemaRepository;
-    private readonly CinemaDbContext _context = context;
 
     public async Task<bool> CreateAsync(CinemaCreateViewModel viewModel)
     {
@@ -49,7 +48,8 @@ public class CinemaService(IRepository<Cinema> cinemaRepository, CinemaDbContext
 
     public async Task<CinemaViewMovieProgramViewModel> ViewMovieProgramAsync(int id) 
     {
-        CinemaViewMovieProgramViewModel? cinemaViewMoviesViewModel = await _context.Cinemas
+        CinemaViewMovieProgramViewModel? cinemaViewMoviesViewModel = await _cinema
+            .GetAllAttachedAsync()
             .Where(cinema => cinema.Id == id) // filter only the needed movie
             .Include(cinema => cinema.CinemaMovies) // include the mapping table in the cinema model
             .ThenInclude(cinemaMovie => cinemaMovie.Movie) // here were in the mapping table and include each movie
