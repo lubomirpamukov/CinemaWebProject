@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using CinemaWeb.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,77 +20,34 @@ public class Repository<T> : IRepository<T> where T : class
         _dbSet = _context.Set<T>();
     }
 
-    public async Task<IEnumerable<T>?> GetAllAsync()
+    public async Task<IEnumerable<T>> GetAllAsync()
     {
         return await _dbSet.ToListAsync();
     }
 
-    public IQueryable<T> GetAllAttachedAsync()
+    public Task<IQueryable<T>> GetAllAttachedAsync()
     {
-        return _dbSet.AsQueryable();
+        throw new ArgumentException();
     }
 
-    public async Task<T?> FindByIdAsync(object id)
+    public Task<T> FindByIdAsync(object id)
     {
-        return await _dbSet.FindAsync(id);
+        throw new ArgumentException();
     }
 
-    public async Task<bool> AddAsync(T entity)
+    public Task<bool> AddAsync(T entity)
     {
-        if (entity == null) 
-        {
-            throw new ArgumentNullException(nameof(entity));
-        }
-
-        try
-        {
-
-            await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
+        throw new ArgumentException();
     }
 
-    public async Task<bool> AddRangeAsync(IEnumerable<T> entities)
+    public Task<bool> AddRangeAsync(IEnumerable<T> entities)
     {
-        if (entities == null || !entities.Any()) 
-        {
-            throw new ArgumentNullException($"{nameof(entities)}");
-        }
-
-        try
-        {
-            await _dbSet.AddRangeAsync(entities);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
+        throw new ArgumentException();
     }
 
-    public async Task<bool> UpdateAsync(T entity)
+    public Task<bool> UpdateAsync(T entity)
     {
-        if(entity == null) 
-        {
-            throw new ArgumentNullException();
-        }
-
-        try
-        {
-            _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
+        throw new ArgumentException();
     }
 
     public Task<bool> SoftDeleteAsync(T entity)
@@ -102,42 +60,14 @@ public class Repository<T> : IRepository<T> where T : class
         throw new ArgumentException();
     }
 
-    public async Task<bool> DeleteAsync(T entity)
+    public Task<bool> DeleteAsync(T entity)
     {
-        if(entity == null) 
-        {
-            throw new ArgumentNullException(nameof(entity));
-        }
-
-        try
-        {
-            _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
+        throw new ArgumentException();
     }
 
-    public async Task<bool> DeleteRangeAsync(IEnumerable<T> entities)
+    public Task<bool> DeleteRangeAsync(IEnumerable<T> entities)
     {
-        if (entities == null || !entities.Any())
-        {
-            throw new ArgumentNullException($"{nameof(entities)}");
-        }
-
-        try
-        {
-            _dbSet.RemoveRange(entities);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
+        throw new ArgumentException();
     }
 
     public Task<(IEnumerable<T> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize)
@@ -145,18 +75,13 @@ public class Repository<T> : IRepository<T> where T : class
         throw new ArgumentException();
     }
 
-    public async Task<bool> AnyAsync(Func<T, bool> predicate)
+    public Task<bool> ExistsAsync(Func<T, bool> predicate)
     {
-        if (predicate == null)
-        {
-            throw new ArgumentNullException(nameof(predicate), "Predicate cannot be null.");
-        }
-
-        return await _dbSet.AnyAsync(x => predicate(x));
+        throw new ArgumentException();
     }
 
-    public async Task<int> CountAsync()
+    public Task<int> CountAsync()
     {
-        return await _dbSet.CountAsync();
+        throw new ArgumentException();
     }
 }

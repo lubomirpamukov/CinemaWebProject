@@ -23,7 +23,7 @@ public class Movie
 
     [Required]
     [MaxLength(DirectorMaxLength)]
-    public string Director { get; set; } = null!;
+    public string Director { get; set; }
 
     [Required]
     [Range(DurationMinLength,DurationMaxLength)]
