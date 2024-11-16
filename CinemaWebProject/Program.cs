@@ -26,6 +26,7 @@ namespace CinemaWeb
             //Register Business logic Services
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddScoped<ICinemaService, CinemaService>();
+            builder.Services.AddScoped<IWatchlistService, WatchlistService>();
 
             //Register repositories
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
