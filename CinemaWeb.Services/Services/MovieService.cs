@@ -89,7 +89,8 @@ public class MovieService
             Director = movie.Director,
             Duration = movie.Duration,
             Genre = movie.Genre,
-            ReleaseDate = movie.ReleaseDate
+            ReleaseDate = movie.ReleaseDate,
+            ImageUrl = movie.ImageUrl
         };
 
         if (movieToAdd == null) 
@@ -134,7 +135,8 @@ public class MovieService
             ReleaseDate = movie.ReleaseDate,
             Director = movie.Director,
             Duration = movie.Duration,
-            Description = movie.Description
+            Description = movie.Description,
+            ImageUrl = movie.ImageUrl
         };
 
         return viewModel;

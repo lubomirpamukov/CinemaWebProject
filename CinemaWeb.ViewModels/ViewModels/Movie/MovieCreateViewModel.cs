@@ -34,4 +34,6 @@ public class MovieCreateViewModel
     [MaxLength(DurationMaxLength)]
     [MinLength(DurationMinLength)]
     public string? Description { get; set; }
+
+    public string ImageUrl { get; set; } = null!;
 }

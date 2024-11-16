@@ -17,5 +17,7 @@ namespace CinemaWeb.ViewModels.Movie
 
         public string? Description { get; set; }
 
+        public string? ImageUrl { get; set; }
+
     }
 }
