@@ -48,14 +48,14 @@ public class CinemaDbContext : IdentityDbContext<ApplicationUser>
         //Configure relation between UserMovie and IdentityUser
         modelBuilder.Entity<UserMovie>()
             .HasOne(x => x.User)
-            .WithMany()
+            .WithMany(u => u.UserMovies)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        //Configure the realtion between UserMovie and Movie
+        //Configure the relation between UserMovie and Movie
         modelBuilder.Entity<UserMovie>()
             .HasOne(x => x.Movie)
-            .WithMany()
+            .WithMany(m => m.UsersMovies)
             .HasForeignKey(x => x.MovieId)
             .OnDelete(DeleteBehavior.Cascade);
 
