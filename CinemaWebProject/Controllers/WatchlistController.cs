@@ -1,5 +1,6 @@
 ﻿using CinemaWeb.Data;
 using CinemaWeb.Models;
+using CinemaWeb.Services.Interfaces;
 using CinemaWeb.ViewModels.ViewModels.Watchlist;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,29 +9,25 @@ using Microsoft.EntityFrameworkCore;
 namespace CinemaWebProject.Controllers
 {
 	public class WatchlistController(
+		IWatchlistService watchlistService,
 		CinemaDbContext context,
-		UserManager<ApplicationUser> userManager)
-		: Controller
+		UserManager<ApplicationUser> userManager
+		): Controller
 	{
+		private readonly IWatchlistService _watchlistService = watchlistService;
 		private readonly UserManager<ApplicationUser> _userManager = userManager;
 		private readonly CinemaDbContext _context = context;
 		public async Task<IActionResult> Index()
 		{
 			var userId = _userManager.GetUserId(User);
+			if (userId == null)
+			{ 
+				throw new ArgumentNullException(nameof(userId), "Null or invalid user");
+			}
 
-			var watchlistMovies = await _context.UsersMovies
-				.Where(um => um.UserId == userId)
-				.Include(um => um.Movie)
-				.Select(x => new WatchListViewModel 
-				{
-					Title = x.Movie.Title,
-					Genre = x.Movie.Genre,
-					ImageUrl = x.Movie.ImageUrl,
-					MovieId = x.MovieId,
-					ReleaseDate = x.Movie.ReleaseDate.ToString("yyyy-MM-dd")
-				}).ToArrayAsync();
+			var result = await _watchlistService.GetWatchlistAsync(userId);
 
-			return View(watchlistMovies);
+			return View(result);
 		}
 
 		[HttpPost]
@@ -43,20 +40,7 @@ namespace CinemaWebProject.Controllers
 				throw new ArgumentNullException(nameof(userId));
 			}
 
-			var movieToAdd = await _context.UsersMovies
-				.FirstOrDefaultAsync(um => um.UserId == userId && um.MovieId == movieId);
-
-			if (movieToAdd == null)
-			{
-                UserMovie userMovieToAdd = new UserMovie
-                {
-                    MovieId = movieId,
-                    UserId = userId,
-                };
-
-                await _context.UsersMovies.AddAsync(userMovieToAdd);
-                await _context.SaveChangesAsync();
-            }
+			var result = await _watchlistService.AddToWatchlistAsync(userId, movieId);
 
 			return RedirectToAction("Index", "Movie");
 		}
@@ -66,16 +50,12 @@ namespace CinemaWebProject.Controllers
 		{
 			var userId = _userManager.GetUserId(User);
 
-			var movieToRemove = _context.UsersMovies
-				.FirstOrDefault(um => um.MovieId == movieId && um.UserId == userId);
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
-			if (movieToRemove == null)
-			{ 
-				throw new ArgumentNullException(nameof(movieToRemove), "No movie to remove or user lack authority to remove movie");
-			}
-
-			_context.UsersMovies.Remove(movieToRemove);
-			await _context.SaveChangesAsync();
+            var result = await _watchlistService.RemoveFromWatchlistAsync(userId, movieId);
 
 			return RedirectToAction("Index");
 		}
