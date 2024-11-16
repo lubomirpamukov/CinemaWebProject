@@ -27,8 +27,4 @@
     <ProjectReference Include="..\CinemaWeb.ViewModels\CinemaWeb.ViewModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Watchlist\" />
-  </ItemGroup>
-
 </Project>
