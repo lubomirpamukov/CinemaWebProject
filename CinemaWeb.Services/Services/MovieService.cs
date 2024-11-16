@@ -10,14 +10,12 @@ namespace CinemaWeb.Services.Services;
 
 public class MovieService
     (
-        CinemaDbContext dbContext,
         IRepository<Movie> movieRepository,
         IRepository<Cinema> cinemaRepository,
         IRepository<CinemaMovie> cinemaMovieRepository
 
     ):IMovieService
 {
-    private readonly CinemaDbContext _context = dbContext;
     private readonly IRepository<Movie> _movies = movieRepository;
     private readonly IRepository<Cinema> _cinema = cinemaRepository;
     private readonly IRepository<CinemaMovie> _cinemaMovie = cinemaMovieRepository;

@@ -32,7 +32,7 @@ namespace CinemaWeb
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
             {
-                //Password configuration
+               /* //Password configuration
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
@@ -52,13 +52,14 @@ namespace CinemaWeb
 
                 //User Settings
                 options.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnm1234567890@";
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = true;*/
 
             })
                 .AddEntityFrameworkStores<CinemaDbContext>();
 
             builder.Services.AddControllersWithViews();
 
+            //Starts the build of the middle were pipeline
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -83,6 +84,7 @@ namespace CinemaWeb
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+            // end the middleware pipile line build
         }
     }
 }
