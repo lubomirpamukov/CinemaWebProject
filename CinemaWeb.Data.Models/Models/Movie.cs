@@ -32,6 +32,8 @@ public class Movie
     [MaxLength(DurationMaxLength)]
     public string? Description { get; set; }
 
+    public string ImageUrl { get; set; } = null!;
+
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
     public virtual ICollection<UserMovie>? UsersMovies { get; set; } = new List<UserMovie>();
