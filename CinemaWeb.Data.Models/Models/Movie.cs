@@ -33,6 +33,8 @@ public class Movie
     public string? Description { get; set; }
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+
+    public virtual ICollection<UserMovie>? UsersMovies { get; set; } = new List<UserMovie>();
     public virtual ICollection<CinemaMovie> CinemaMovies { get; set; }
         = new HashSet<CinemaMovie>();
 
