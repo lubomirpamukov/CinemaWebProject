@@ -16,6 +16,9 @@ public class Cinema
     [MaxLength(LocationMaxLength)]
     public string Location { get; set; } = null!;
 
+    [Required]
+    public bool IsDeleted { get; set; } = false;
+
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     public virtual ICollection<CinemaMovie> CinemaMovies { get; set; }
         = new HashSet<CinemaMovie>();
