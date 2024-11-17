@@ -22,6 +22,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+
+                        <!-- Manager Dropdown Menu-->
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="managerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Manage Cinemas</a>
+                                <ul class="dropdown-menu" aria-labelledby="managerDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Cinema" asp-action="Index">Manage Cinemas</a>
+                                    </li>
+                                    <li>  
+                                        <a class="dropdown-item" asp-area="" asp-controller="Movie" asp-action="Index">Manage Movies</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cinema" asp-action="Index">Cinemas</a>
                         </li>
@@ -50,9 +66,15 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - CinemaWebProject
+    <footer class="bg-light text-muted py-3">
+        <div class="container text-center">
+            <p> &copy; 2024 - CinemaWebProject | Bringing Cinema and Movies to you</p>
+            <p>
+                Follow us on: 
+                <a href="#" class="text-muted mx-1">Facebook</a> |
+                <a href="#" class="text-muted mx-1">Facebook</a> |
+                <a href="#" class="text-muted mx-1">Instagram</a> 
+            </p>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
