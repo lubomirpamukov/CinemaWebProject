@@ -34,7 +34,9 @@ public class Constants
         public const string CinemaError = "Cinema name is required.";
         public const string CinemaMaxLengthErrorMessage = "Cinema name must be between 1 and 80 characters.";
         public const int CinemaMaxLength = 80;
+        public const int CinemaMinLength = 1;
 
+        public const int LocationMinLength = 1;
         public const int LocationMaxLength = 50;
         public const string LocationError = "Location is required.";
         public const string LocationMaxLengthErrorMessage = "Location must be between 1 and 50 characters.";
