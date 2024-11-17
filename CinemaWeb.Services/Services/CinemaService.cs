@@ -4,6 +4,7 @@ using CinemaWeb.Models;
 using CinemaWeb.Services.Interfaces;
 using CinemaWeb.ViewModels.Cinema;
 using CinemaWeb.ViewModels.Movie;
+using CinemaWeb.ViewModels.ViewModels.Cinema;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaWeb.Services.Services;
@@ -12,7 +13,7 @@ public class CinemaService(IRepository<Cinema> cinemaRepository) : ICinemaServic
 {
     private readonly IRepository<Cinema> _cinema = cinemaRepository;
 
-    public async Task<bool> CreateAsync(CinemaCreateViewModel viewModel)
+    public async Task<bool> AddCinemaAsync(CinemaCreateViewModel viewModel)
     {
         var modelToAdd = new Cinema
         {
@@ -43,7 +44,13 @@ public class CinemaService(IRepository<Cinema> cinemaRepository) : ICinemaServic
         return viewModel;
     }
 
-    public async Task<CinemaViewMovieProgramViewModel> ViewMovieProgramAsync(int id) 
+	public async Task<IEnumerable<CinemaIndexViewModel>> IndexGetAllOrderedByLocationAsync()
+	{
+        var cinemasOrderByLocation = await GetAllAsync();
+        return cinemasOrderByLocation.OrderBy(c => c.Location);
+	}
+
+	public async Task<CinemaViewMovieProgramViewModel> GetViewMovieProgramAsync(int id) 
     {
         CinemaViewMovieProgramViewModel? cinemaViewMoviesViewModel = await _cinema
             .GetAllAttachedAsync()
@@ -66,4 +73,45 @@ public class CinemaService(IRepository<Cinema> cinemaRepository) : ICinemaServic
 
         return cinemaViewMoviesViewModel;
     }
+
+
+	public async Task<bool> UpdateCinemaAsync(EditCinemaFormModel model)
+	{
+        var cinema = await _cinema
+            .GetAllAttachedAsync()
+            .FirstOrDefaultAsync(c => c.Id == model.Id);
+
+        if (cinema == null)
+        {
+            return false;
+        }
+
+        cinema.Name = model.Name;
+        cinema.Location = model.Location;
+        await _cinema.UpdateAsync(cinema);
+        return true;
+	}
+
+	public async Task<EditCinemaFormModel?> GetCinemaEditModelByIdAsync(int id)
+	{
+		var cinema = await _cinema
+            .GetAllAttachedAsync()
+            .Where(c => c.Id == id)
+            .Select(cinema => new EditCinemaFormModel 
+            {
+                Id = cinema.Id,
+                Name = cinema.Name,
+                Location = cinema.Location,
+
+			})
+            .FirstOrDefaultAsync();
+
+        if (cinema == null) 
+        {
+            return null;
+        }
+
+        return cinema;
+	}
+
 }
