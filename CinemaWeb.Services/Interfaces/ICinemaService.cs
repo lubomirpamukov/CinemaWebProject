@@ -1,4 +1,5 @@
 ﻿using CinemaWeb.ViewModels.Cinema;
+using CinemaWeb.ViewModels.ViewModels.Cinema;
 
 namespace CinemaWeb.Services.Interfaces
 {
@@ -6,8 +7,14 @@ namespace CinemaWeb.Services.Interfaces
     {
         public Task<IEnumerable<CinemaIndexViewModel>> GetAllAsync();
 
-        public Task<bool> CreateAsync(CinemaCreateViewModel viewModel);
+        public Task<IEnumerable<CinemaIndexViewModel>> IndexGetAllOrderedByLocationAsync();
 
-        public Task<CinemaViewMovieProgramViewModel> ViewMovieProgramAsync(int id);
+        public Task<bool> AddCinemaAsync(CinemaCreateViewModel viewModel);
+
+        public Task<CinemaViewMovieProgramViewModel> GetViewMovieProgramAsync(int id);
+
+        public Task<EditCinemaFormModel?> GetCinemaEditModelByIdAsync(int id);
+
+        public Task<bool> UpdateCinemaAsync(EditCinemaFormModel model);
     }
 }
