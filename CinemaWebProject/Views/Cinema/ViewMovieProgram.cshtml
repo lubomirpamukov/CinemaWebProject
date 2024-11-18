@@ -1,4 +1,4 @@
-﻿@model CinemaWeb.ViewModels.Cinema.CinemaViewMovieProgramViewModel<h2>@Model.Name - Cinema Movie Program</h2><p><strong>Location:</strong> @Model.Location</p><h3>Movies Currently Showing:</h3>@if (Model.Movies.Any())
+﻿@model CinemaWeb.ViewModels.Cinema.CinemaDetailsViewModel<h2>@Model.Name - Cinema Movie Program</h2><p><strong>Location:</strong> @Model.Location</p><h3>Movies Currently Showing:</h3>@if (Model.Movies.Any())
 {    <ul class="list-group">        @foreach (var movie in Model.Movies)
         {            <li class="list-group-item">                <strong>@movie.Title</strong> <br />                <small>Duration: @movie.Duration minutes</small>            </li>        }    </ul>}
 else
