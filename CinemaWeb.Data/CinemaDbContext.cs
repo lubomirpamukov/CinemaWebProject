@@ -1,4 +1,5 @@
-﻿using CinemaWeb.Data.Models.Models;
+﻿using CinemaWeb.Data.Configurations;
+using CinemaWeb.Data.Models.Models;
 using CinemaWeb.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -22,59 +23,13 @@ public class CinemaDbContext : IdentityDbContext<ApplicationUser>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        //Manually adding configuration
+      /*modelBuilder.ApplyConfiguration(new CinemaMovieConfiguration());
+        modelBuilder.ApplyConfiguration(new TicketConfiguration());
+        modelBuilder.ApplyConfiguration(new UserMovieConfiguration())*/;
+
+        //Adding configuration with reflection
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CinemaDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
-
-        //Mapping table configuration
-        //Composite key
-        modelBuilder.Entity<CinemaMovie>()
-            .HasKey(cm => new { cm.MovieId, cm.CinemaId });
-
-        modelBuilder.Entity<CinemaMovie>()
-            .HasOne(x => x.Cinema)
-            .WithMany(x => x.CinemaMovies)
-            .HasForeignKey(x => x.CinemaId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<CinemaMovie>()
-            .HasOne(x => x.Movie)
-            .WithMany(x => x.CinemaMovies)
-            .HasForeignKey(x => x.MovieId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        //Define the composite key for UserMovie
-        modelBuilder.Entity<UserMovie>()
-            .HasKey(um => new { um.MovieId, um.UserId });
-
-        //Configure relation between UserMovie and IdentityUser
-        modelBuilder.Entity<UserMovie>()
-            .HasOne(x => x.User)
-            .WithMany(u => u.UserMovies)
-            .HasForeignKey(x => x.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        //Configure the relation between UserMovie and Movie
-        modelBuilder.Entity<UserMovie>()
-            .HasOne(x => x.Movie)
-            .WithMany(m => m.UsersMovies)
-            .HasForeignKey(x => x.MovieId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        //Configure relation between Ticket and Movie
-        modelBuilder.Entity<Ticket>()
-            .HasOne(ticket => ticket.Movie)
-            .WithMany(movie => movie.Tickets)
-            .HasForeignKey(ticket => ticket.MovieId);
-
-        //Configure relation between Ticket and Cinema
-        modelBuilder.Entity<Ticket>()
-            .HasOne(ticket => ticket.Cinema)
-            .WithMany(cinema => cinema.Tickets)
-            .HasForeignKey(ticket => ticket.CinemaId);
-
-        //Configure relation between Ticket and User
-        modelBuilder.Entity<Ticket>()
-            .HasOne(ticket => ticket.User)
-            .WithMany(user => user.Tickets)
-            .HasForeignKey(ticket => ticket.UserId);
     }
 }

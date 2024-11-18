@@ -48,7 +48,7 @@ namespace CinemaWeb.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("CinemaWeb.Models.ApplicationUser", b =>
@@ -142,7 +142,7 @@ namespace CinemaWeb.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cinemas");
+                    b.ToTable("Cinemas", (string)null);
                 });
 
             modelBuilder.Entity("CinemaWeb.Models.CinemaMovie", b =>
@@ -157,7 +157,7 @@ namespace CinemaWeb.Data.Migrations
 
                     b.HasIndex("CinemaId");
 
-                    b.ToTable("CinemasMovies");
+                    b.ToTable("CinemasMovies", (string)null);
                 });
 
             modelBuilder.Entity("CinemaWeb.Models.Movie", b =>
@@ -199,7 +199,7 @@ namespace CinemaWeb.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("CinemaWeb.Models.UserMovie", b =>
@@ -214,7 +214,7 @@ namespace CinemaWeb.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersMovies");
+                    b.ToTable("UsersMovies", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
