@@ -27,6 +27,8 @@ public class Constants
         public const string DirectorNameLengthError = "Director name is too long.";
         public const string DurationError = "Please specify the movie duration";
         public const string DurationRangeError = "Duration must be between 10 and 500 minutes.";
+
+        public const int ImageUrlMaxLength = 999;
     }
 
     public class Cinema 
