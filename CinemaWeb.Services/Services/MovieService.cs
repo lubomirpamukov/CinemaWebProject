@@ -26,12 +26,13 @@ public class MovieService
         
         //get all cinemas
         var cinemas = await _cinema.GetAllAsync();
-        var activeCinemas = cinemas.Where(cinema => !cinema.IsDeleted);
         AddMovieToCinemaProgramViewModel viewModel = new AddMovieToCinemaProgramViewModel
         {
             MovieId = movie.Id,
             MovieTitle = movie.Title,
-            Cinemas = activeCinemas.Select(cinema => new CinemaCheckBoxItemViewModel
+            Cinemas = cinemas
+            .Where(c => c.IsDeleted == false)
+            .Select(cinema => new CinemaCheckBoxItemViewModel
             {
                 Id = cinema.Id,
                 Name = cinema.Name,
