@@ -15,7 +15,7 @@ public class Movie
 
     [Required]
     [MaxLength(GenreMaxLength)]
-    public string? Genre { get; set; }
+    public string Genre { get; set; } = null!;
 
     [Required]
     [DataType(DataType.Date)]
@@ -29,8 +29,9 @@ public class Movie
     [Range(DurationMinLength,DurationMaxLength)]
     public int Duration { get; set; }
 
+    [Required]
     [MaxLength(DurationMaxLength)]
-    public string? Description { get; set; }
+    public string Description { get; set; } = null!;
 
     [Url]
     public string ImageUrl { get; set; } = null!;
