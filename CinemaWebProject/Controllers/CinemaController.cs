@@ -44,7 +44,7 @@ public class CinemaController(ICinemaService cinemaService) : Controller
 
     public async Task<IActionResult> ViewMovieProgram(int id) 
     {
-        var cinemaViewMoviesViewModel = await _cinemaService.GetViewMovieProgramAsync(id);
+        var cinemaViewMoviesViewModel = await _cinemaService.GetCinemaDetailsByIdAsync(id);
 
         if (cinemaViewMoviesViewModel == null) 
         {
@@ -102,4 +102,45 @@ public class CinemaController(ICinemaService cinemaService) : Controller
 
         return RedirectToAction(nameof(Manage));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> SoftDelete(int id) 
+    {
+        if (id < 1)
+        {
+            return RedirectToAction(nameof(Manage));
+        }
+
+        var cinema = await _cinemaService
+            .GetViewDetailsAsync(id);
+
+        if (cinema == null) 
+        {
+            return RedirectToAction(nameof(Manage));
+        }   
+
+        return View(cinema);
+    }
+
+    [HttpPost, ActionName("SoftDeleteConfirmed")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SoftDeleteConfirmed(int id) 
+    {
+        if (id < 1) 
+        {
+            return RedirectToAction(nameof(Manage));
+        }
+
+        bool isSoftDeleted = await _cinemaService.SoftDeleteCinemaAsync(id);
+
+        if (!isSoftDeleted) 
+        {
+            TempData["ErrorMessage"] = "Unable to delete cinema. It may have active movies associated with it.";
+
+            return RedirectToAction(nameof(SoftDelete), new { id = id });
+        }
+
+        return RedirectToAction(nameof(Manage));
+    }
+
 }
