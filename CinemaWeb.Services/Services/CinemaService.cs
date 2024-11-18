@@ -32,7 +32,10 @@ public class CinemaService(IRepository<Cinema> cinemaRepository) : ICinemaServic
 
     public async Task<IEnumerable<CinemaIndexViewModel>> GetAllAsync()
     {
-        var cinemas = await _cinema.GetAllAsync();
+        var cinemas = await _cinema
+            .GetAllAttachedAsync()
+            .Where(c => c.IsDeleted == false)
+            .ToArrayAsync();
         
         var viewModel = cinemas.Select(c => new CinemaIndexViewModel
         {
@@ -50,20 +53,21 @@ public class CinemaService(IRepository<Cinema> cinemaRepository) : ICinemaServic
         return cinemasOrderByLocation.OrderBy(c => c.Location);
 	}
 
-	public async Task<CinemaViewMovieProgramViewModel> GetViewMovieProgramAsync(int id) 
+	public async Task<CinemaDetailsViewModel> GetCinemaDetailsByIdAsync(int id) 
     {
-        CinemaViewMovieProgramViewModel? cinemaViewMoviesViewModel = await _cinema
+        CinemaDetailsViewModel? cinemaViewMoviesViewModel = await _cinema
             .GetAllAttachedAsync()
             .Where(cinema => cinema.Id == id) // filter only the needed movie
             .Include(cinema => cinema.CinemaMovies) // include the mapping table in the cinema model
             .ThenInclude(cinemaMovie => cinemaMovie.Movie) // here were in the mapping table and include each movie
-            .Select(cinema => new CinemaViewMovieProgramViewModel // making a projection and mapping data from the
+            .Select(cinema => new CinemaDetailsViewModel // making a projection and mapping data from the
             {                                                        //database model to the viewModel
                 Id = cinema.Id,
                 Name = cinema.Name,
                 Location = cinema.Location,
                 Movies = cinema.CinemaMovies.Select(cinemaMovie => new MovieProgramViewModel
                 { // filling up the movie program for the cinema
+                    
                     Title = cinemaMovie.Movie.Title, // from the cinema movie mapping table in cinema i select the movie and take the title
                     Duration = cinemaMovie.Movie.Duration // // from the cinema movie mapping table in cinema i select the movie and take the title
                 }).ToList()
@@ -114,4 +118,37 @@ public class CinemaService(IRepository<Cinema> cinemaRepository) : ICinemaServic
         return cinema;
 	}
 
+
+    public async Task<bool> SoftDeleteCinemaAsync(int cinemaId)
+    {
+        var cinemaToDelete = await _cinema
+            .GetAllAttachedAsync()
+            .Include(c => c.CinemaMovies)
+            .FirstOrDefaultAsync(c => c.Id == cinemaId);
+
+        if (cinemaToDelete == default || cinemaToDelete.CinemaMovies.Any())
+        {
+            return false;
+        }
+
+        cinemaToDelete.IsDeleted = true;
+        await _cinema.UpdateAsync(cinemaToDelete);
+        return true;
+    }
+
+    public async Task<CinemaDetailsViewModel?> GetViewDetailsAsync(int id)
+    {
+        var cinemaViewModel = await _cinema
+            .GetAllAttachedAsync()
+            .Where (c => c.Id == id)
+            .Select(c => new CinemaDetailsViewModel 
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Location = c.Location
+            })
+            .FirstOrDefaultAsync();
+
+        return cinemaViewModel;
+    }
 }
