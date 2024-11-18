@@ -9,4 +9,6 @@ public class CinemaCheckBoxItemViewModel
     public string Name { get; set; } = null!;
 
     public bool IsSelected { get; set; }
+
+    public bool IsDeleted { get; set; } = false;
 }
